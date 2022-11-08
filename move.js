@@ -1,42 +1,57 @@
 function move(element) {
     element.style.position = 'fixed'
-
+    
     function moveToCoordinates(left, bottom) {
         element.style.left = left + 'px'
         element.style.bottom = bottom + 'px'
     }
-
+    
     function moveWithArrowKeys(left, bottom, characterDirectionChange) {
         let direction = null;
         let x = left;
         let y = bottom;
-
+        
         element.style.left = x + 'px'
         element.style.bottom = y + 'px'
-
+        
         //movecharacter function
         function moveCharacter() {
             if (direction === 'west') {
-                x = x - 1
+                if (x > 0) {
+                    x = x - 1
+                }
             }
             if (direction === 'north') {
-                y = y + 1
+                if (y < window.innerHeight - 70) {
+                    y = y + 1
+                }
             }
             if (direction === 'east') {
-                x = x + 1
+                if (x < window.innerWidth - 50) {
+                    x = x + 1
+                }
             }
             if (direction === 'south') {
-                y = y - 1
+                if (y > 105) {
+                    y = y - 1
+                }
             }
             element.style.left = x + 'px'
             element.style.bottom = y + 'px'
+            
+            if (y > 300) {
+                element.style.zIndex = -1
+            }
+            if (y <= 300) {
+                element.style.zIndex = 1
+            }
         }
-
+        
         setInterval(moveCharacter, 1)
-
+        
         document.addEventListener('keydown', function (e) {
             if (e.repeat) return;
-
+            
             if (e.key === 'ArrowLeft') {
                 direction = 'west'
             }
@@ -49,12 +64,16 @@ function move(element) {
             if (e.key === 'ArrowDown') {
                 direction = 'south'
             }
-            characterDirectionChange(direction)
+            if (characterDirectionChange != null) {
+                characterDirectionChange(direction)
+            }
         })
-
+        
         document.addEventListener('keyup', function (e) {
             direction = null
-            characterDirectionChange(direction)
+            if (characterDirectionChange != null) {
+                characterDirectionChange(direction)
+            }
         })
     }
 
