@@ -38,8 +38,8 @@ function move(element) {
             }
             element.style.left = x + 'px'
             element.style.bottom = y + 'px'
-            
-            if (y > 300) {
+            //this z-index change only really works for the pillar in the middle
+            if (y > 300 && 350 < x < 400) {
                 element.style.zIndex = -1
             }
             if (y <= 300) {
